@@ -1,17 +1,17 @@
 var express = require("express");
 var router = express.Router();
+const indexController = require("../controllers/indexController");
+const { isAuthenticated } = require("../middlewares/auth");
 
 /* GET home page. */
-router.get("/", function (req, res, next) {
-  res.render("index", { title: "Express" });
-});
+router.get("/", indexController.index);
 
-router.get("/home", function (req, res, next) {
-  res.render("home", { title: "Home" });
-});
+router.get("/home", isAuthenticated, indexController.home);
 
-router.get("/login", function (req, res, next) {
-  res.render("login", { title: "Login" });
-});
+router.get("/login", indexController.loginPage);
+
+router.post("/login", indexController.login);
+
+router.get("/logout", indexController.logout);
 
 module.exports = router;
